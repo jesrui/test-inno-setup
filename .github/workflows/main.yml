@@ -3,9 +3,6 @@ name: Inno Setup test
 on:
   push
 
-permissions:
-  contents: read
-
 jobs:
 
   build:
@@ -35,3 +32,9 @@ jobs:
         cd MyProg
         "%programfiles(x86)%\Inno Setup 6\iscc.exe" Example1.iss
       shell: cmd
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: MyProg/Output/mysetup.exe
