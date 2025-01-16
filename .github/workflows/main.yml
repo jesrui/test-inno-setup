@@ -27,6 +27,13 @@ jobs:
         START /WAIT MyProg\Output\mysetup.exe /VERYSILENT
       shell: cmd
 
+    - name: Compile example with mingw
+      run: |
+        gcc -v
+        cd examples\mingw
+        mingw32-make.exe CC=gcc
+      shell: cmd
+
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
