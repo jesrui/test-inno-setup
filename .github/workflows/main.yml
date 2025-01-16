@@ -14,6 +14,13 @@ jobs:
       with:
         fetch-depth: 0
 
+    # https://www.msys2.org/docs/ci/
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: MINGW64
+        update: true
+        install: mingw-w64-x86_64-gcc mingw-w64-x86_64-make
+
     - uses: ./.github/actions/install-inno-setup
 
     - name: Build MyProg's installer
@@ -30,9 +37,9 @@ jobs:
     - name: Compile example with mingw
       run: |
         gcc -v
-        cd examples\mingw
+        cd examples/mingw
         mingw32-make.exe CC=gcc
-      shell: cmd
+      shell: msys2 {0}
 
     - name: Release
       uses: softprops/action-gh-release@v1
