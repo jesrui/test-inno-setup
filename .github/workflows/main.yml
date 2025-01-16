@@ -9,23 +9,12 @@ jobs:
     runs-on: windows-latest
 
     steps:
-
     - name: Checkout
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
-    - name: Download Inno Setup
-      run: |
-        curl -L -o is.exe "https://jrsoftware.org/download.php/is.exe?site=2" && \
-        ls -l && \
-        sha1sum -c INNOSETUP_MANIFEST.txt
-      shell: bash
-
-    - name: Install Inno Setup
-      run: |
-       is.exe /SP- /VERYSILENT /ALLUSERS /SUPPRESSMSGBOXES /DOWNLOADISCRYPT=1
-      shell: cmd
+    - uses: ./.github/actions/install-inno-setup
 
     - name: Build MyProg's installer
       run: |
